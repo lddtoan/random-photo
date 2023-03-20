@@ -1,14 +1,21 @@
 import * as React from "react";
 import { Provider } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { store } from "./store";
-
-const ImageView = React.lazy(() => import("./components/image-view"));
+import Layout from "./components/layout";
 
 const App = () => {
   return (
     <React.StrictMode>
       <Provider store={store}>
-        <ImageView />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout style={{ height: "100vh" }} />}>
+              <Route path="/yesterday" element={<></>} />
+              <Route path="/tomorrow" element={<></>} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </Provider>
     </React.StrictMode>
   );

@@ -24,6 +24,10 @@ const config: Configuration = {
         test: /\.(js|jsx)$/,
         use: "babel-loader",
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
@@ -35,7 +39,11 @@ const config: Configuration = {
   plugins: [
     new HtmlWebpackPlugin({ template: "./public/index.html" }),
     new BundleAnalyzerPlugin()
-  ]
+  ],
+  devServer: {
+    historyApiFallback: true,
+    port: 3000
+  }
 };
 
 export default config;
