@@ -1,5 +1,15 @@
 {
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "target": "ES5",
+    "allowJs": true,
+    "outDir": "build",
+    "module": "ESNext",
+    "moduleResolution": "node"
   }
 }
