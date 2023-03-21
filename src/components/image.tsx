@@ -1,17 +1,24 @@
 import { sample } from "lodash";
 import * as React from "react";
+import { useSelector } from "react-redux";
+import { selector } from "../store/features/image-view/selectors";
 
 export interface ImageProps {
   style?: React.CSSProperties;
+  index: number;
 }
 
-const Image = ({ style }: ImageProps) => {
+const Image = ({ style, index }: ImageProps) => {
   const [position, setPosition] = React.useState(sample(["100%", "-100%"]));
   const [blur, setBlur] = React.useState(true);
 
+  const { images } = useSelector(selector);
+
   React.useEffect(() => {
-    setPosition("0px");
-  }, []);
+    if (window && images.length > 0) {
+      window.requestAnimationFrame(() => setPosition("0px"));
+    }
+  }, [images]);
 
   return (
     <div
@@ -33,12 +40,10 @@ const Image = ({ style }: ImageProps) => {
           height: "100%",
           width: "100%",
           zIndex: "100",
-          transitionDelay: `${sample(
-            Array.from(Array(10).keys()).map((i) => i * 200)
-          )}ms`,
+          transitionDelay: `250ms`,
           transitionDuration: "500ms",
-          transitionProperty: "opacity",
-          opacity: blur ? "1" : "0"
+          transitionProperty: "top",
+          top: blur ? "0px" : sample(["-110%", "110%"])
         }}
       />
       <div
@@ -53,7 +58,14 @@ const Image = ({ style }: ImageProps) => {
           backgroundColor: "red"
         }}
         onTransitionEnd={() => setBlur(false)}
-      ></div>
+      >
+        {images.length > 0 && (
+          <img
+            src={images.at(index).url}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        )}
+      </div>
     </div>
   );
 };

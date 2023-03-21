@@ -1,8 +1,9 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { actions } from ".";
+import { actions } from "./slice";
 import { Image } from "./types";
 import { imagesApi } from "../../../services/api";
+import { addSagas } from "../../sagas";
 
 function* getImages(action: PayloadAction<Date>) {
   try {
@@ -17,3 +18,5 @@ function* getImages(action: PayloadAction<Date>) {
 export function* watch() {
   yield all([takeLatest(actions.getImages.type, getImages)]);
 }
+
+addSagas(watch);

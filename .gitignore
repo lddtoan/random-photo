@@ -3,3 +3,6 @@
 
 # Webpack
 /build
+
+# Secret
+.env

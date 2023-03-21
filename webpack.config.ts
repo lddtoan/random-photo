@@ -1,8 +1,11 @@
 import "webpack-dev-server";
-import { Configuration } from "webpack";
+import { Configuration, DefinePlugin } from "webpack";
 import { resolve } from "path";
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const config: Configuration = {
   entry: "./src/index.ts",
@@ -38,7 +41,10 @@ const config: Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({ template: "./public/index.html" }),
-    new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin(),
+    new DefinePlugin({
+      "process.env": JSON.stringify(process.env)
+    })
   ],
   devServer: {
     historyApiFallback: true,
