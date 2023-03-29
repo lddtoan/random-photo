@@ -19,4 +19,4 @@ export function* watch() {
   yield all([takeLatest(actions.getImages.type, getImages)]);
 }
 
-addSagas(watch);
+addSagas("imageView", watch);

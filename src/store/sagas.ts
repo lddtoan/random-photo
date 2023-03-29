@@ -1,15 +1,11 @@
 import { Saga } from "redux-saga";
-import { all } from "redux-saga/effects";
 import { sagaMiddleware } from ".";
 
-const sagas = [];
+const sagas = {};
 
-export const addSagas = (saga: Saga) => {
-  sagas.push(saga());
-
-  function* rootSaga() {
-    yield all(sagas);
+export const addSagas = (id: string, saga: Saga) => {
+  if (!(id in sagas)) {
+    const task = sagaMiddleware.run(saga);
+    sagas[id] = task;
   }
-
-  sagaMiddleware.run(rootSaga);
 };

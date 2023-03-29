@@ -63,7 +63,7 @@ export const getImagesPerDay = async (day: Date) => {
   });
   if (response.status === 200) {
     const data = response.data;
-    return data.results.map((i) => ({ url: i.urls.regular }));
+    return data.results.map((i) => ({ url: i.urls.small }));
   }
   return [];
 };

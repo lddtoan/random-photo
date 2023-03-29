@@ -13,7 +13,7 @@ const middleware = [sagaMiddleware];
 export const store = configureStore({
   reducer: combineReducers(reducers),
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(middleware)
+    getDefaultMiddleware({ serializableCheck: false }).concat(middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

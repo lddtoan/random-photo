@@ -12,7 +12,8 @@ export const slice = createSlice({
   name: "image-view",
   initialState,
   reducers: {
-    getImages: (state) => {
+    getImages: (state, action: PayloadAction<Date>) => {
+      console.log(action);
       state.loading = true;
     },
     getImagesSuccess: (state, action: PayloadAction<Image[]>) => {

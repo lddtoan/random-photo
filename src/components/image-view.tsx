@@ -1,8 +1,10 @@
-import { useEffect, useMemo } from "react";
+import { CSSProperties, useEffect, useMemo } from "react";
 import { random } from "lodash";
 import Image from "./image";
 import { useDispatch } from "react-redux";
 import { actions } from "../store/features/image-view";
+import { useLocation } from "react-router";
+import * as dayjs from "dayjs";
 
 export interface MasonryProps {
   style?: React.CSSProperties;
@@ -44,12 +46,27 @@ export const Masonry = ({ style, index }: MasonryProps) => {
   );
 };
 
-const ImageView = () => {
+export interface ImageViewProps {
+  style?: CSSProperties;
+}
+
+const ImageView = ({ style }: ImageViewProps) => {
   const dispatch = useDispatch();
 
+  const location = useLocation();
+
   useEffect(() => {
-    dispatch(actions.getImages());
-  }, []);
+    if (location.pathname === "/yesterday") {
+      dispatch(actions.getImages(dayjs().subtract(1, "day").toDate()));
+    } else if (location.pathname === "/tomorrow") {
+      // Tomorrow needs add 1 second when uses dayjs().diff()
+      dispatch(
+        actions.getImages(dayjs().add(1, "day").add(1, "second").toDate())
+      );
+    } else {
+      dispatch(actions.getImages());
+    }
+  }, [location.pathname]);
 
   return (
     <div
@@ -60,7 +77,8 @@ const ImageView = () => {
         gap: "1rem",
         height: "100%",
         background:
-          "radial-gradient(circle, rgba(171,247,177,1) 0%, rgba(255,255,255,1) 100%)"
+          "radial-gradient(circle, rgba(171,247,177,1) 0%, rgba(255,255,255,1) 100%)",
+        ...style
       }}
     >
       <Masonry style={{ flexBasis: "20%", height: "75%" }} index={0} />

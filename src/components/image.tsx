@@ -10,15 +10,16 @@ export interface ImageProps {
 
 const Image = ({ style, index }: ImageProps) => {
   const [position, setPosition] = React.useState(sample(["100%", "-100%"]));
-  const [blur, setBlur] = React.useState(true);
+  const [blur, setBlur] = React.useState("0%");
+  const [loaded, setLoaded] = React.useState(false);
 
   const { images } = useSelector(selector);
 
   React.useEffect(() => {
-    if (window && images.length > 0) {
-      window.requestAnimationFrame(() => setPosition("0px"));
+    if (window && images.length > 0 && loaded && position !== "0%") {
+      window.requestAnimationFrame(() => setPosition("0%"));
     }
-  }, [images]);
+  }, [images, loaded, position]);
 
   return (
     <div
@@ -40,10 +41,10 @@ const Image = ({ style, index }: ImageProps) => {
           height: "100%",
           width: "100%",
           zIndex: "100",
-          transitionDelay: `250ms`,
+          transitionDelay: "250ms",
           transitionDuration: "500ms",
           transitionProperty: "top",
-          top: blur ? "0px" : sample(["-110%", "110%"])
+          top: blur
         }}
       />
       <div
@@ -54,15 +55,15 @@ const Image = ({ style, index }: ImageProps) => {
           zIndex: "10",
           top: position,
           transitionDuration: "1.5s",
-          transitionProperty: "top",
-          backgroundColor: "red"
+          transitionProperty: "top"
         }}
-        onTransitionEnd={() => setBlur(false)}
+        onTransitionEnd={() => setBlur(sample(["-110%", "110%"]))}
       >
         {images.length > 0 && (
           <img
             src={images.at(index).url}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onLoad={() => setLoaded(true)}
           />
         )}
       </div>
