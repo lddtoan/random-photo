@@ -4,7 +4,7 @@ import Image from "./image";
 import { useDispatch } from "react-redux";
 import { actions } from "../store/features/image-view";
 import { useLocation } from "react-router";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 
 export interface MasonryProps {
   style?: React.CSSProperties;

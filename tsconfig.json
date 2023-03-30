@@ -10,6 +10,7 @@
     "allowJs": true,
     "outDir": "build",
     "module": "ESNext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   }
 }

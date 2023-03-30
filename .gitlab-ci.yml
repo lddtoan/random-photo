@@ -1,0 +1,18 @@
+images: node
+
+before_script:
+  - yarn install
+
+stages:
+  - unit-test
+  - build
+
+test-image-view:
+  stage: unit-test
+  script:
+    - yarn test
+
+build-node:
+  stage: build
+  script:
+    - yarn build

@@ -5,12 +5,11 @@ import { Image } from "./types";
 import { imagesApi } from "../../../services/api";
 import { addSagas } from "../../sagas";
 
-function* getImages(action: PayloadAction<Date>) {
+export function* getImages(action: PayloadAction<Date>) {
   try {
     const res: Image[] = yield call(imagesApi.getImagesPerDay, action.payload);
     yield put(actions.getImagesSuccess(res));
-  } catch (e) {
-    console.log(e);
+  } catch {
     yield put(actions.getImagesFail());
   }
 }

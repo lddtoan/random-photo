@@ -1,4 +1,4 @@
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { instance } from "./_axios";
 
 export type PhotosResponse = {
@@ -57,7 +57,7 @@ export const getImagesPerDay = async (day: Date) => {
   const response = await instance.get<SearchPhotosResponse>(url, {
     params: {
       query: "digital art",
-      page: 2 + dayjs().diff(day, "day"),
+      page: 1 + dayjs(day).diff(dayjs(day).startOf("week"), "day"),
       per_page: 9
     }
   });

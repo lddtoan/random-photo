@@ -44,7 +44,7 @@ const config: Configuration = {
       template: "./public/index.html",
       favicon: "./public/favicon.ico"
     }),
-    new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin({ analyzerMode: "disabled" }),
     new DefinePlugin({
       "process.env": JSON.stringify(process.env)
     })
